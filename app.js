@@ -25,31 +25,31 @@ app.directive('showBetweenHours', function () {
 
 			if (showAt < hideAt) { // 9 - 15
 				if (showAt > now || hideAt <= now) {
-					hideElement();
+					hideElement(element);
 				}
 			} else { // 17 - 9
 				if (hideAt <= now && now < showAt) {
-					hideElement();
+					hideElement(element);
 				}
-			}
-
-
-			function getTimeString(time) {
-				time = time.split(':');
-
-				return w(time[0]) + w(time[1] || 0) + w(time[2] || 0);
-			}
-
-			// Ensure the number is two digits long
-			function w(n) {
-				n = Number(n);
-				return n < 10 ? '0' + n : n.toString();
-			}
-
-			function hideElement() {
-				element.data('olddisplay', element.css('display'));
-				element.css('display', 'none');
 			}
 		}
 	};
+
+
+	function getTimeString(time) {
+		time = time.split(':');
+
+		return w(time[0]) + w(time[1] || 0) + w(time[2] || 0);
+	}
+
+	// Ensure the number is two digits long
+	function w(n) {
+		n = Number(n);
+		return n < 10 ? '0' + n : n.toString();
+	}
+
+	function hideElement(element) {
+		element.data('olddisplay', element.css('display'));
+		element.css('display', 'none');
+	}
 });
