@@ -8,10 +8,6 @@ app.directive('showBetweenHours', function () {
 	return {
 		restrict: 'AC',
 		link: function (scope, element, attrs) {
-			if (!attrs.showBetweenHours) {
-				return;
-			}
-
 			// Turns '9:10-20:15' into ['9:10', '20:15']
 			var hours = attrs.showBetweenHours.split(/[^\d:]/);
 
