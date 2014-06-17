@@ -23,7 +23,7 @@ app.directive('showBetweenHours', function () {
 				d = new Date(),
 				now = w(d.getHours()) + w(d.getMinutes()) + w(d.getSeconds());
 
-			if (showAt < hideAt) { // 9 - 15
+			if (showAt < hideAt) { // 9 - 17
 				if (showAt > now || hideAt <= now) {
 					hideElement(element);
 				}
