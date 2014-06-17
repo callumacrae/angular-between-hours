@@ -12,6 +12,7 @@ app.directive('showBetweenHours', function () {
 				return;
 			}
 
+			// Turns '9:10-20:15' into ['9:10', '20:15']
 			var hours = attrs.showBetweenHours.split(/[^\d:]/);
 
 			if (hours.length !== 2) {
@@ -36,18 +37,33 @@ app.directive('showBetweenHours', function () {
 	};
 
 
+	/**
+	 * Turn 6:30 into 063000 for comparison.
+	 *
+	 * @param {string} time String containing the time.
+	 * @returns {string} Comparable string.
+	 */
 	function getTimeString(time) {
-		time = time.split(':');
-
-		return w(time[0]) + w(time[1] || 0) + w(time[2] || 0);
+		var parts = time.split(':');
+		return w(parts[0]) + w(parts[1] || 0) + w(parts[2] || 0);
 	}
 
-	// Ensure the number is two digits long
+	/**
+	 * Convert a number to a string of length two, by adding a 0 if necessary.
+	 *
+	 * @param {string|number} n Number to convert to string.
+	 * @returns {string} String of length two.
+	 */
 	function w(n) {
 		n = Number(n);
 		return n < 10 ? '0' + n : n.toString();
 	}
 
+	/**
+	 * Hide an element, storing the old display type in a data attribute.
+	 * 
+	 * @param element jqLite object containing element(s) to hide.
+	 */
 	function hideElement(element) {
 		element.data('olddisplay', element.css('display'));
 		element.css('display', 'none');
