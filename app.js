@@ -23,12 +23,14 @@ app.directive('showBetweenHours', function () {
 				d = new Date(),
 				now = w(d.getHours()) + w(d.getMinutes()) + w(d.getSeconds());
 
-			if (
-				(showAt < hideAt || now < showAt || now >= hideAt) &&
-				(showAt <= hideAt || (now >= hideAt && now < showAt))
-				) {
-				element.data('olddisplay', element.css('display'));
-				element.css('display', 'none');
+			if (showAt < hideAt) { // 9 - 15
+				if (showAt > now || hideAt <= now) {
+					hideElement();
+				}
+			} else { // 17 - 9
+				if (hideAt <= now && now < showAt) {
+					hideElement();
+				}
 			}
 
 
@@ -42,6 +44,11 @@ app.directive('showBetweenHours', function () {
 			function w(n) {
 				n = Number(n);
 				return n < 10 ? '0' + n : n.toString();
+			}
+
+			function hideElement() {
+				element.data('olddisplay', element.css('display'));
+				element.css('display', 'none');
 			}
 		}
 	};
