@@ -25,7 +25,7 @@ app.directive('showBetweenHours', function () {
 					hideElement(element);
 				}
 			} else { // 17 - 9
-				if (hideAt <= now && showAt > now) {
+				if (showAt > now && hideAt <= now) {
 					hideElement(element);
 				}
 			}
