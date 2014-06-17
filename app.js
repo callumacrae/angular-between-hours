@@ -25,7 +25,7 @@ app.directive('showBetweenHours', function () {
 					hideElement(element);
 				}
 			} else { // 17 - 9
-				if (hideAt <= now && now < showAt) {
+				if (hideAt <= now && showAt > now) {
 					hideElement(element);
 				}
 			}
@@ -57,7 +57,7 @@ app.directive('showBetweenHours', function () {
 
 	/**
 	 * Hide an element, storing the old display type in a data attribute.
-	 * 
+	 *
 	 * @param element jqLite object containing element(s) to hide.
 	 */
 	function hideElement(element) {
