@@ -4,34 +4,30 @@
 
 var app = angular.module('playground', []);
 
-app.directive('showBetweenHours', function () {
-	return {
-		restrict: 'AC',
-		link: function (scope, element, attrs) {
-			// Turns '9:10-20:15' into ['9:10', '20:15']
-			var hours = attrs.showBetweenHours.split(/[^\d:]/);
+app.factory('isBetweenHours', function () {
+	return function (startTime, endTime, timeToTest) {
+		startTime = getTimeString(startTime);
+		endTime = getTimeString(endTime);
 
-			if (hours.length !== 2) {
-				return;
+		if (timeToTest) {
+			timeToTest = getTimeString(timeToTest);
+		} else {
+			var d = new Date();
+			timeToTest = w(d.getHours()) + w(d.getMinutes()) + w(d.getSeconds());
+		}
+
+		if (startTime < endTime) { // 9 - 17
+			if (startTime > timeToTest || endTime <= timeToTest) {
+				return false;
 			}
-
-			var showAt = getTimeString(hours[0]),
-				hideAt = getTimeString(hours[1]),
-				d = new Date(),
-				now = w(d.getHours()) + w(d.getMinutes()) + w(d.getSeconds());
-
-			if (showAt < hideAt) { // 9 - 17
-				if (showAt > now || hideAt <= now) {
-					hideElement(element);
-				}
-			} else { // 17 - 9
-				if (showAt > now && hideAt <= now) {
-					hideElement(element);
-				}
+		} else { // 17 - 9
+			if (startTime > timeToTest && endTime <= timeToTest) {
+				return false;
 			}
 		}
-	};
 
+		return true;
+	};
 
 	/**
 	 * Turn 6:30 into 063000 for comparison.
@@ -54,14 +50,23 @@ app.directive('showBetweenHours', function () {
 		n = Number(n);
 		return n < 10 ? '0' + n : n.toString();
 	}
+});
 
-	/**
-	 * Hide an element, storing the old display type in a data attribute.
-	 *
-	 * @param element jqLite object containing element(s) to hide.
-	 */
-	function hideElement(element) {
-		element.data('olddisplay', element.css('display'));
-		element.css('display', 'none');
-	}
+app.directive('showBetweenHours', function (isBetweenHours) {
+	return {
+		restrict: 'AC',
+		link: function (scope, element, attrs) {
+			// Turns '9:10-20:15' into ['9:10', '20:15']
+			var hours = attrs.showBetweenHours.split(/[^\d:]/);
+
+			if (hours.length !== 2) {
+				return;
+			}
+
+			if (!isBetweenHours(hours[0], hours[1])) {
+				element.data('olddisplay', element.css('display'));
+				element.css('display', 'none');
+			}
+		}
+	};
 });
