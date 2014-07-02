@@ -1,6 +1,6 @@
 /* global angular */
 
-angular.module('betweenHours', [])
+angular.module('callumacrae.betweenHours', [])
 	.factory('isBetweenHours', function () {
 		'use strict';
 
