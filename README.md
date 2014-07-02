@@ -1,4 +1,4 @@
-# angular-betweenHours
+# angular-between-hours
 
 An AngularJS directive which will only display an element during certain hours.
 
