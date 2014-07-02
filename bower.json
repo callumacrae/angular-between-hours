@@ -1,0 +1,27 @@
+{
+  "name": "angular-between-hours",
+  "version": "0.0.0",
+  "homepage": "https://github.com/callumacrae/angular-between-hours",
+  "authors": [
+    "Callum Macrae <callum@macr.ae>"
+  ],
+  "description": "A directive to only display an element between certain hours",
+  "main": "between-hours.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "directive",
+    "time"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angualr": "~1.2.17"
+  }
+}
